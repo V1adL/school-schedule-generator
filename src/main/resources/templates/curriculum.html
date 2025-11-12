@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Curriculum</title>
+    <style>
+        body { font-family: sans-serif; margin: 2em; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px;}
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left;}
+        th { background-color: #f4f4f4; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #007bff; text-decoration: none; }
+        form { background: #f4f4f4; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+        form div { margin-bottom: 10px; }
+        form label { display: block; margin-bottom: 5px; font-weight: bold; }
+        form input, form select { width: 300px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        form button { background: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+<a th:href="@{/}" class="back-link">&larr; Back to Dashboard</a>
+<h1>Manage Curriculum (Workload)</h1>
+
+<h2>Add New Task</h2>
+<form th:action="@{/curriculum/add}"
+      th:method="post"
+      th:object="${newCurriculumForm}">
+
+    <div>
+        <label for="group">Student Group:</label>
+        <select id="group" th:field="*{groupId}" required>
+            <option value="">-- Select Group --</option>
+            <option th:each="group : ${groupsList}"
+                    th:value="${group.id}"
+                    th:text="${group.name}">
+            </option>
+        </select>
+    </div>
+
+    <div>
+        <label for="subject">Subject:</label>
+        <select id="subject" th:field="*{subjectId}" required>
+            <option value="">-- Select Subject --</option>
+            <option th:each="subject : ${subjectsList}"
+                    th:value="${subject.id}"
+                    th:text="${subject.name} + ' (' + ${subject.teacher?.name} + ')'">
+            </option>
+        </select>
+    </div>
+
+    <div>
+        <label for="hoursPerWeek">Hours per week:</label>
+        <input type="number" id="hoursPerWeek" th:field="*{hoursPerWeek}" required min="1" />
+    </div>
+
+    <div>
+        <button type="submit">Add Task</button>
+    </div>
+</form>
+
+<h2>Current Workload</h2>
+<table th:if="${!itemsList.isEmpty()}">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Group</th>
+        <th>Subject</th>
+        <th>Teacher</th>
+        <th>Hours per Week</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${itemsList}">
+        <td th:text="${item.id}"></td>
+        <td th:text="${item.studentGroup?.name}"></td>
+        <td th:text="${item.subject?.name}"></td>
+        <td th:text="${item.subject?.teacher?.name}"></td>
+        <td th:text="${item.hoursPerWeek}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<p th:if="${itemsList.isEmpty()}">
+    No tasks added yet.
+</p>
+
+</body>
+</html>

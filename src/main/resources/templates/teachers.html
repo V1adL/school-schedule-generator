@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Teachers</title>
+    <style>
+        body { font-family: sans-serif; margin: 2em; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px;}
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left;}
+        th { background-color: #f4f4f4; }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        form {
+            background: #f4f4f4;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        form div { margin-bottom: 10px; }
+        form label { display: block; margin-bottom: 5px; font-weight: bold; }
+        form input, form select {
+            width: 300px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        form button {
+            background: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<a th:href="@{/}" class="back-link">&larr; Back to Dashboard</a>
+<h1>Manage Teachers</h1>
+
+<h2>Add New Teacher</h2>
+<form th:action="@{/teachers/add}"
+      th:method="post"
+      th:object="${newTeacherForm}">
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" required />
+    </div>
+
+    <div>
+        <label for="classroom">Home Classroom (optional):</label>
+        <select id="classroom" th:field="*{classId}">
+            <option value="">-- No Classroom --</option>
+            <option th:each="room : ${classroomsList}"
+                    th:value="${room.id}"
+                    th:text="${room.roomNumber}">
+            </option>
+        </select>
+    </div>
+
+    <div>
+        <button type="submit">Add</button>
+    </div>
+</form>
+
+<h2>List of Teachers</h2>
+<table th:if="${!teachersList.isEmpty()}">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Home Classroom</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="teacher : ${teachersList}">
+        <td th:text="${teacher.id}"></td>
+        <td th:text="${teacher.name}"></td>
+        <td th:text="${teacher.homeClassroom?.roomNumber}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<p th:if="${teachersList.isEmpty()}">
+    No teachers added yet.
+</p>
+
+</body>
+</html>

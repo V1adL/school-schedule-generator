@@ -1,6 +1,6 @@
 # 📅 School Schedule Generator
 
-![Java](https://img.shields.io/badge/Java-17-orange) ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-green) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue) ![Thymeleaf](https://img.shields.io/badge/Thymeleaf-3-darkgreen)
+![Java](https://img.shields.io/badge/Java-17-orange) ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.5.7-green) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue) ![Thymeleaf](https://img.shields.io/badge/Thymeleaf-3-darkgreen)
 
 A full-stack web application designed to automate the complex process of creating weekly school timetables. The system allows administrators to manage educational resources (teachers, classrooms, subjects) and uses a greedy algorithm to generate a conflict-free schedule based on defined constraints.
 
@@ -46,7 +46,8 @@ The core of the application is a **Greedy Algorithm** designed to solve the sche
 
 1.  **Clone the repository**
     ```bash
-    git clone [https://github.com/your-username/school-schedule-app.git](https://github.com/your-username/school-schedule-app.git)
+    git clone https://github.com/V1adL/school-schedule-generator.git
+    cd school-schedule-generator
     ```
 
 2.  **Configure Database**
